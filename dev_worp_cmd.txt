@@ -1,0 +1,99 @@
+connect to ssh server 
+ssh -i /c/Users/agnav/.ssh/LightsailDefaultKey-us-east-1.pem ubuntu@35.170.79.151
+
+
+##############################################################
+######################### MAINNET ############################
+##############################################################
+start mainnet
+ ./src/worpd
+
+get blockcount
+./src/worp-cli getblockcount
+
+get blockinfo 
+./src/worp-cli getblockchaininfo
+
+electrs
+./target/release/electrs \
+  --network mainnet \
+  --daemon-dir /home/agnav/.worp \
+  --daemon-rpc-addr 127.0.0.1:9332 \
+  --cookie worpuser:1234 \
+  --db-dir /home/agnav/.electrs-worp-mainnet \
+  --electrum-rpc-addr 127.0.0.1:60001 \
+  --jsonrpc-import
+
+mine block 
+./src/worp-cli generatetoaddress 1 worp1q8vr5659uv47j8pfgr4t8r2tmwmmq8z7wvmayvz
+
+block 1 hash c4852fa24fd8bb627fda56717cb0bee672957a8e8bbaced9d5670eb5a530b3fe 
+
+
+################################# REGNET ###########################################
+.env
+WORP_RPC_URL=http://127.0.0.1:19443
+WORP_RPC_USER=worpuser
+WORP_RPC_PASSWORD=1234
+NEXT_PUBLIC_WORP_NETWORK=regnet
+
+
+
+cat ~/.worp/regtest/.cookie
+
+config file loc
+~/.worp/worp.conf
+
+start regtest
+./src/worpd -regtest
+
+start electrs
+./target/release/electrs \
+  --network regtest \
+  --daemon-dir /home/agnav/.worp \
+  --daemon-rpc-addr 127.0.0.1:19443 \
+  --cookie worpuser:1234 \
+  --db-dir /home/agnav/.electrs-worp-regtest \
+  --electrum-rpc-addr 127.0.0.1:40001 \
+  --jsonrpc-import
+
+
+mine blocks
+ ./src/worp-cli -regtest generatetoaddress 105 rworp1q8vr5659uv47j8pfgr4t8r2tmwmmq8z7w2arc2s
+
+get blockcount
+ ./src/worp-cli -regtest getblockcount
+
+
+#############################  TESTNET  ##############################
+.env 
+# rpc
+WORP_RPC_URL=http://127.0.0.1:19332
+WORP_RPC_USER=worpuser
+WORP_RPC_PASSWORD=1234
+WORP_ELECTRUM_HOST=127.0.0.1
+WORP_ELECTRUM_PORT=50001
+NEXT_PUBLIC_WORP_NETWORK=testnet
+
+start testnet
+ ./src/worpd -testnet
+
+get blockcount
+./src/worp-cli -testnet getblockcount
+
+get blockinfo 
+./src/worp-cli -testnet getblockchaininfo
+
+electrs
+./target/release/electrs \
+  --network testnet \
+  --daemon-dir /home/agnav/.worp \
+  --daemon-rpc-addr 127.0.0.1:19332 \
+  --cookie worpuser:1234 \
+  --db-dir /home/agnav/.electrs-worp-testnet \
+  --electrum-rpc-addr 127.0.0.1:50001 \
+  --jsonrpc-import
+
+mine block 
+./src/worp-cli -testnet generatetoaddress 1 tworp1q8vr5659uv47j8pfgr4t8r2tmwmmq8z7w5q0mxc
+

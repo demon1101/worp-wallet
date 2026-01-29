@@ -1,0 +1,43 @@
+devloper docx
+
+STEP 1: Generate mnemonic phrase
+  bip39 - to create mnemonic 
+  files - mnemonic.ts
+
+STEP 2: Derive root key
+  bip32, tiny-secp256k1 -> 
+  files - hd.ts
+
+
+// support
+address.ts - convert public key to worp bech32 address (need mpm install bech32)
+rpc.ts - Send JSON-RPC calls to worpd
+
+STEP 3: Scan UTXOs
+scanUtxos.ts - determines which utxo belongs to which key
+
+STEP 4: build Tx
+buildTx.ts - selecting users utxo for transaction
+
+STEP 5: creating transaction signature for worp
+  lib: npm install bitcoinjs-lib tiny-secp256k1
+  signTx.ts
+
+STEP 6: Take a fully signed raw transaction hex and ask the WORP node to accept it.
+  backend api to post transaction to worpd
+  api/chain/tx/route.ts
+
+
+#############################################################
+                          UI
+#############################################################
+STEP 1: Unlock logic
+  lib/wallet/walletContext.ts
+  app/wallet/layout.ts
+  unlock page
+
+  Storage
+  → where the encrypted mnemonic is saved / loaded
+
+  Encryption
+  → how mnemonic is encrypted with password
